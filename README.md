@@ -12,10 +12,11 @@ In the future.
 - Movement of robotic with three sections in 3D space.
 - Robot arm will follow mouse position (red sphere).
 
-### Free body cart with pendulum
+### Demonstration
 ![alt text](./figures/RoboticArm_Sim.gif "")
 
 ## Future plans
+- Add gripper.
 - Demonstrate closed-loop controlers.
 
 Requires Python to run the example code (inclues dedicated unit-test). For visual support install pyGame and GSOF_3dWireFrame.
