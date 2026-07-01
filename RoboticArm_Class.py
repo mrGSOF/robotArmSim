@@ -37,7 +37,7 @@ class View(Assembly):
         dot = Object(
             filename="%s/RobotArm/cube.json"%folder, color=Colors.RED)\
             .scale(3)\
-            .translate(-132+135, 200, 0)\
+            .translate(-50+135, 200, 0)\
             .setOrigin()
 
         self.armLength = 300
@@ -49,14 +49,28 @@ class View(Assembly):
         self.robot = Assembly(objects=(baseObj, self.arm3))
 
         super().__init__(objects=(self.robot, dot))
-    
+
     def _rotateArm(self, arm:Assembly, angle:float|int, center=(135, 0, 0)):
         arm.rotate(x=0, y=0, z=angle, centerAt=center)
         return arm
 
-        # arm.translate(-c[0], -c[1], -c[2])
-        # arm.rotate(x=0, y=0, z=angle)
-        # arm.translate(*c)
+    def _getHeading(self, targetX, targetZ) -> float:
+        return math.atan2(targetX, targetZ) +math.pi/2
+    
+    def _getElevation(self, targetX, targetY) -> float:
+        return math.pi/2 -math.atan2(targetY, abs(targetX)) 
+
+    def _getExtendAngles(self, targetX, targetY, targetZ) -> list:
+        try:
+            D = math.sqrt(targetX**2 +targetY**2 +targetZ**2)
+            linkLength = self.armLength
+            #x = math.acos(D/(3*linkLength))
+            #x,y,z = -x, 2*x, -2*x
+            x = math.acos(math.sqrt(2*D/linkLength +3)/2 -0.5)
+            x,y,z = (-x,3*x,-3*x)
+        except:
+            x,y,z = 0,0,0
+        return (x,y,z)
 
     def setArmAngles(self, base, angle3, angle2, angle1):
         """Set the angles of the robotic arm segments"""
@@ -67,25 +81,12 @@ class View(Assembly):
         self._rotateArm(self.arm1, angle1)
 
     def moveTo(self, targetX, targetY, targetZ):
-        D = math.sqrt(targetX**2 +targetY**2)
-        linkLength = self.armLength
-        elevationAngle = math.atan2(targetY, abs(targetX))
-        headingAngle = math.atan2(targetX, targetZ)
+        elevationAngle = self._getElevation(targetX, targetY)
+        headingAngle   = self._getHeading(targetX, targetZ)
+        x,y,z = self._getExtendAngles(targetX, targetY, targetZ)
+#        print("X: %1.2f, Y: %1.2f"%(x,y))
+        self.setArmAngles(headingAngle, elevationAngle +x, y, z)
 
-        # 2cos(x)*armLength+cos(y)*armLength=D
-        # 2sin(x)*armLength+sin(y)*armLength=0
-        # self.setArmAngles(headingAngle+math.pi/2, (math.pi/2 -elevationAngle), 0,0)
-        # return
-
-        try:
-            #print((3*linkLength**2+D**2)/(4*linkLength*D))
-            x = math.acos((3*linkLength**2+D**2)/(4*linkLength*D))
-            y = math.atan2(-2*math.sin(x), D/linkLength -2*math.cos(x))
-
-            self.setArmAngles(headingAngle+math.pi/2, (math.pi/2 -elevationAngle)-x, -y,-x)
-        except:
-            self.setArmAngles(headingAngle+math.pi/2, (math.pi/2 -elevationAngle), 0,0)
-
-    def tick(self, fps=60):
+    def tick(self, fps=30):
         """Update all elements"""
         self.time += 1/fps

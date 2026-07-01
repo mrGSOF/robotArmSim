@@ -44,14 +44,14 @@ if __name__ == "__main__":
         .setOrigin()
 
     roboticArm = RoboticArm_Class.View()
-    roboticArm.rotate(x=-0*math.pi/4, y=0, z=0).translate(0, 0, 0).setOrigin()
+    roboticArm.rotate(x=-0*math.pi/4, y=0, z=0).translate(-132, 0, 0).setOrigin()
     
     mouse = Object_wireFrame(
         obj=Objects.sphere(2), color=Colors.RED)\
         .scale(5.0)\
         .setOrigin()
 
-    world = Assembly(objects=(ground, roboticArm, mouse)).translate(x=-60, y=-300, z=-2200).setOrigin()
+    world = Assembly(objects=(ground, roboticArm, mouse)).translate(x=0, y=-300, z=-2200).setOrigin()
 
     clock = pygame.time.Clock()
     screen = newScreen("3D Wire Frame Shapes", SCREEN_WIDTH, SCREEN_HEIGHT, Colors.WHITE)
@@ -68,7 +68,7 @@ if __name__ == "__main__":
         world.reset()
         
         mx, my = pygame.mouse.get_pos()
-        mPosX = 2000*2*(mx/SCREEN_WIDTH -0.5) #< Left negative
+        mPosX = 2000*2*(mx/SCREEN_WIDTH -0.5)         #< Left negative
         mPosY = 1000*(-2)*(my/SCREEN_HEIGHT -0.5)+300 #< Up positive
         mPosZ = 300
         
