@@ -1,2 +1,1 @@
-pygame
 GSOF_3dWireFrame

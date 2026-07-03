@@ -25,16 +25,13 @@ http://python.org/
 
 http://www.pygame.org
 
-https://github.com/mrGSOF/3dWireFrame
-
-or
-
 https://github.com/mrGSOF/GSOF_3dWireFrame
 
 ## Running instructions
 - Install requirements `pip install -r requirements.txt`
-- Clone and install GSOF_3dWireFrame (`pip install .` or `setup.bat`)
-- Clone roboticArmSim
+- or install from PIP with `pip install GSOF_3dWireFrame`
+- or clone and install GSOF_3dWireFrame (`pip install GSOF_3dWireFrame.` or `setup.bat`)
+- Clone roboticArmSim project.
 - run `python Example_RoboticArm.py`
 
 Interactive operation is supported using the mouse.
