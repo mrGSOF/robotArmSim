@@ -55,7 +55,7 @@ if __name__ == "__main__":
 
     clock = pygame.time.Clock()
     screen = newScreen("3D Wire Frame Shapes", SCREEN_WIDTH, SCREEN_HEIGHT, Colors.WHITE)
-    wireframe = DISP.WireFrame(screen, pygame.draw.line, f=50, scale=20.0)
+    wireframe = DISP.WireFrame(screen, pygame.draw.line, f=1, scale=1000.0)
 
     fps = 30
     run = True
