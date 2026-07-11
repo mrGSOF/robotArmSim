@@ -22,13 +22,13 @@ class View(Assembly):
     def __init__(self, folder='./'):
         self.time = 0.0
         baseObj = Object(
-            filename="%s/RobotArm/base.stl"%folder, color=Colors.BLUE)\
+            filename="%s/RobotArm/Base.stl"%folder, color=Colors.BLUE)\
             .rotate(-math.pi/2, 0, 0)\
             .translate(132, -200, 0)\
             .scale(0.3)\
             .setOrigin()
         armObj = Object(
-            filename="%s/RobotArm/arm.stl"%folder, color=Colors.YELLOW)\
+            filename="%s/RobotArm/Arm.stl"%folder, color=Colors.YELLOW)\
             .rotate(math.pi/2, 0, 0)\
             .scale(0.3)\
             .setCenter(scale=1.0, method="arithCenter")\
